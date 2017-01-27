@@ -1,0 +1,3 @@
+rootProject.name = 'NaderNavigationExperimental20161208'
+
+include ':app'
