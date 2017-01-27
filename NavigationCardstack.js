@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, NavigationExperimental } from 'react-native';
 
 const {
-  CardStack: NavigationCardStack
+  CardStack: NavigationCardStack,
+  StateUtils: NavigationStateUtils
 } = NavigationExperimental;
 
 let styles = {};
@@ -33,24 +34,10 @@ function reducer(state, action, route) {
     };
   }
   switch(action) {
-    case "push": {
-      const routes = state.routes.slice();
-      routes.push(route);
-      return {
-        ...state,
-        index: routes.length - 1,
-        routes
-      }
-    }
-    case "pop": {
-      if (state.index <= 0) return state;
-      const routes = state.routes.slice(0, -1);
-      return {
-        ...state,
-        index: routes.length - 1,
-        routes
-      }
-    }
+    case "push":
+      return NavigationStateUtils.push(state, route)
+    case "pop":
+      return NavigationStateUtils.pop(state)
     default:
       return state;
   }

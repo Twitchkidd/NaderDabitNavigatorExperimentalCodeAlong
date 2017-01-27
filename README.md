@@ -11,3 +11,11 @@ is equivalent to
 const NavigationCardStack = NavigationExperimental.CardStack;
 ```
 ... I think. At least the app loads the same either way. Should probably take an ES6 course next.
+
+Ooohh, now it makes sense, now we're doing:
+```javascript
+const {
+  CardStack: NavigationCardStack,
+  StateUtils: NavigationStateUtils
+} = NavigationExperimental;
+```
