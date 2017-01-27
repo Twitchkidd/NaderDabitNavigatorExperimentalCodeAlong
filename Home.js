@@ -16,6 +16,7 @@ const Home = ({ push }) => {
     <View style={styles.container}>
       <Text>Hello from @Home!</Text>
       <Text onPress={() => push({ key: "About" })}>Go to @About</Text>
+      <Text onPress={() => push({ key: "About", type: "modal"})}>Go to @About, modal style!</Text>
     </View>
   )
 }

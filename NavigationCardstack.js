@@ -50,8 +50,14 @@ class App extends Component {
     );
   }
   render() {
+    const { navState } = this.props;
+    let direction = "horizontal";
+    if (navState.prevPushedRoute && navState.prevPushedRoute.type === "modal") {
+      direction = "vertical";
+    }
     return (
       <NavigationCardStack
+        direction={direction}
         navigationState={this.props.navState}
         renderHeader={this._renderHeader}
         renderScene={this._renderScene}
