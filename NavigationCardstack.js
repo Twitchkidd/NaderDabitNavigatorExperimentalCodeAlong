@@ -1,52 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text, NavigationExperimental } from 'react-native';
+import Home from './Home';
+import About from './About';
 
 const {
   CardStack: NavigationCardStack,
-  StateUtils: NavigationStateUtils,
   Header: NavigationHeader
 } = NavigationExperimental;
 
 let styles = {};
 
-const Home = ({ navigate }) => (
-  <View style={styles.container}>
-    <Text>Hello from @Home!</Text>
-    <Text onPress={() => navigate("push", { key: "About" })}>
-      Go to About
-    </Text>
-  </View>
-)
-
-const About = ({ navigate }) => (
-  <View style={styles.container}>
-    <Text>Hello from @About!</Text>
-    <Text onPress={() => navigate("pop")}>
-      Go back to Home
-    </Text>
-  </View>
-)
-
-function reducer(state, action, route) {
-  if (!state) {
-    return {
-      index: 0,
-      routes: [{key: "Home"}]
-    };
-  }
-  switch(action) {
-    case "push":
-      return NavigationStateUtils.push(state, route)
-    case "pop":
-      return NavigationStateUtils.pop(state)
-    default:
-      return state;
-  }
-}
-
 class Header extends Component {
   _back = () => {
-    this.props.navigate("pop");
+    this.props.pop();
   }
   _renderTitleComponent = (props) => {
     return (
@@ -67,34 +33,26 @@ class Header extends Component {
 }
 
 class App extends Component {
-  state = { navState: reducer() }
-  _navigate = (action, route) => {
-    const navState = reducer(this.state.navState, action, route);
-    this.setState({
-      navState
-    });
-  }
   _renderScene = (props) => {
     switch(props.scene.route.key) {
       case "Home":
-        return <Home navigate={this._navigate} />
+        return <Home />
       case "About":
-        return <About navigate={this._navigate} />
+        return <About />
     }
   }
   _renderHeader = (sceneProps) => {
     return (
       <Header
-        navigate={this._navigate}
+        pop={this.props.pop}
         {...sceneProps}
       />
     );
   }
   render() {
-    const { navState } = this.state;
     return (
       <NavigationCardStack
-        navigationState={navState}
+        navigationState={this.props.navState}
         renderHeader={this._renderHeader}
         renderScene={this._renderScene}
       />
